@@ -16,7 +16,6 @@ public class FileReader implements FileContentReader {
         try(Scanner scanner = new Scanner(file)) {
             while(scanner.hasNextLine()) {
                 temp.add(scanner.nextLine());
-
             }
         } catch (Exception ex) {
             ex.printStackTrace();

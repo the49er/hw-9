@@ -4,6 +4,7 @@ import readers.FileContentReader;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,20 +30,20 @@ public class FrequencyWord implements FileContentReader {
     }
 
     public void countWords(String str) {
+        str = str.replaceAll("\\.|\\,", "").toLowerCase();
         List<String> myList = Arrays.asList(str.split(" "));
         HashMap<String, Integer> map = new HashMap<>();
 
         for (String s : myList) {
-            s.toLowerCase();
             if (map.containsKey(s)){
                 map.put(s, map.get(s)+1);
             }else{
                 map.put(s, 1);
             }
         }
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            System.out.println(entry.getKey()  + " " + entry.getValue());
-        }
+        map.entrySet().stream().
+                sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .forEach(e -> System.out.println(e.getKey() + " " + e.getValue()));
 
     }
 
