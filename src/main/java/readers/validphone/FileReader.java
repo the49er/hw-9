@@ -35,12 +35,12 @@ public class FileReader implements FileContentReader {
 
         char[] charArr =  line.toCharArray();
         for (int i = 0; i < line.length()-1; i++) {
-            if (charArr[3] == '-' || charArr[4] == ')') {
+            if (Character.isDigit(charArr[0]) && line.length() == 12 && charArr[3] == '-') {
+                validPhone = true;
+            }else if (charArr[0] == '(' && line.length() == 14) {
                 validPhone = true;
             }
-
         }
-
         return validPhone;
     }
 }
