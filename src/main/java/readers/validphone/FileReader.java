@@ -5,6 +5,7 @@ import readers.FileContentReader;
 import java.io.File;
 import java.util.Scanner;
 import java.util.StringJoiner;
+import java.util.regex.Pattern;
 
 public class FileReader implements FileContentReader {
 
@@ -30,17 +31,16 @@ public class FileReader implements FileContentReader {
         return result.toString();
     }
 
-    public boolean isPhone(String line){
+    public boolean isPhone(String str){
         boolean validPhone = false;
 
-        char[] charArr =  line.toCharArray();
-        for (int i = 0; i < line.length()-1; i++) {
-            if (Character.isDigit(charArr[0]) && line.length() == 12 && charArr[3] == '-') {
-                validPhone = true;
-            }else if (charArr[0] == '(' && line.length() == 14) {
-                validPhone = true;
-            }
+        Pattern pattern1 =  Pattern.compile("\\(\\d\\d\\d\\)\\s\\d\\d\\d\\-\\d\\d\\d\\d");
+        Pattern pattern2 =  Pattern.compile("\\d\\d\\d\\-\\d\\d\\d\\-\\d\\d\\d\\d");
+
+        if (pattern1.matcher(str).matches() || pattern2.matcher(str).matches()) {
+            validPhone = true;
         }
+
         return validPhone;
     }
 }
